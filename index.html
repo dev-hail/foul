@@ -1,0 +1,805 @@
+<!DOCTYPE html> 
+<html lang='en'>
+<head> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Mr G</title>
+	<meta name="robots" content="all">
+	<link rel="icon" href="/Images/fav/favicon.ico" sizes="any">
+    <link rel="icon" href="/Images/fav/favicon.svg" type="image/svg+xml">
+    <link rel="mask-icon" href="/Images/fav/fav-mask.svg">
+    <link rel="apple-touch-icon" href="http://127.0.0.1:8080/Images/fav/apple-touch.png">
+	<style type="text/css" rel='preload'>
+		@font-face {
+		  font-family: "geograph";
+		  src: url("./fonts/Geograph.otf") format("opentype");
+		  font-display: swap
+		}
+
+		@font-face {
+		  font-family: "amiamie";
+		  src: url("./fonts/Amiamie.otf") format("opentype");
+		  font-display: swap
+		}
+
+		@font-face {
+		  font-family: "maelstorm";
+		  src: url("./fonts/new.woff2") format("woff2");
+		  font-display: swap;
+		  font-weight: 400;
+		}
+
+		@font-face {
+		  font-family: "grotesk";
+		  src: url("./fonts/Canopee Regular.otf") format("opentype");
+		  font-display: swap;
+		  font-weight: 400;
+		}
+
+		@font-face {
+		  font-family: "sohne";
+		  src: url("./fonts/Sohne.otf") format("opentype");
+		  font-display: swap;
+		  font-weight: 400;
+		}
+
+		@font-face {
+		  font-family: "founders";
+		  src: url("./fonts/founders.otf") format("opentype");
+		  font-display: swap;
+		  font-weight: 400;
+		}
+
+		html {
+            -webkit-text-size-adjust: none;
+            -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font: inherit;
+            -webkit-tap-highlight-color: transparent;
+/*            overflow: hidden;*/
+        }
+
+        body {
+			margin: 0px;
+			height: 100vh;
+/*		    overflow: -moz-scrollbars-none;*/
+/*		    -ms-overflow-style: none;*/
+		}
+
+		body::-webkit-scrollbar {
+/*		    width: 0 !important;*/
+		}
+
+        a,body,div,footer,h1,h2,h3,header,img,li,nav,p,span,ul {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font: inherit;
+            font-size: 100%
+        }
+
+        li,ul {
+            list-style: none
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        a,img,picture,svg {
+            display: block
+        }
+
+        img,svg {
+            width: 100%;
+            height: auto
+        }
+
+        svg {
+            height: 100%
+        }
+
+
+		a, body, div, footer, h1, h2, header, html, img, li, nav, p, span, ul {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font: inherit;
+			font-size: 100%;
+		}
+
+		a {
+		    color: inherit;
+		    text-decoration: none;
+		}
+	</style>
+	<script type="text/javascript">
+		window.F = {};
+		let cW = window.innerWidth;
+		let cH = window.innerHeight;
+		F.Is = {
+		  str: t=>"string" == typeof t,
+		  obj: t=>t === Object(t),
+		  arr: t=>t.constructor === Array,
+		  def: t=>void 0 !== t,
+		  und: t=>void 0 === t
+		},
+
+		F.T = (t,s,r,e,p="")=>{
+		  e = F.Is.und(e) ? "%" : e;
+		  t.style.transform = "translate3d(" + s + e + "," + r + e + ",0) " + p
+		},
+
+		F.G = {
+		    id: function(t) {
+		        return document.getElementById(t)
+		    },
+		    class: function(t) {
+		        return document.getElementsByClassName(t)
+		    },
+		    tag: function(t) {
+		        return document.getElementsByTagName(t)
+		    },
+		    qs: function(t) {
+		        return document.querySelectorAll(t)
+		    }
+		},
+
+		F.Gt = (e) => {
+		  var style = getComputedStyle(e).transform
+		  var matrix = new DOMMatrixReadOnly(style)
+		  return matrix.m41
+		},
+
+		F.C = {
+		  liv: (e) => e.getBoundingClientRect().left <= cW,
+		  inv: (e) => {
+		    s1 = []
+		    let g = Array.from(F.G.id('u').children)
+		    g.forEach(r => {
+		      let o = r.getBoundingClientRect()
+		      let k = (o.left >= 0 && o.right <= cW) || ((o.left >= 0 && o.left <= cW && o.right >= cW) || (o.left <= 0 && o.right <= cW && o.right >= 0) || (o.left<=0 && o.right>=0))
+		      if (k) {
+		        s1.push(r)
+		      }
+		    })
+		    return s1
+		    g = s1.length;
+
+		  }
+		},
+
+		F.S = (e, c, cls="", s="") => {
+		  let k = [];
+		  for (let z=0; z <= c; z++) {
+		    let inTe = e.children[z].innerText.split('');
+		    k.push(inTe)
+		  }
+		  k.forEach((ts, z) => {
+		    let spnt = '';
+		    ts.map(k => (spnt += k == ' ' ? 
+		      `<span class='gap'></span>` : 
+		      `<span class='${cls}' style='${s}'>${k}</span>`))
+		    e.children[z].innerHTML = spnt
+		  })
+		}, 
+		F.Cr = t=>document.createElement(t),
+		F.M = (i, p, e) => {
+		  let q = {
+		    rootMargin: p ? p : '0',
+		    threshold: e ? e : 0
+		  }
+		  return new IntersectionObserver(i, q)
+		},
+
+		F.Ease = {
+                linear: t=>t,
+                i1: t=>1 - Math.cos(t * (Math.PI / 2)),
+                o1: t=>Math.sin(t * (Math.PI / 2)),
+                io1: t=>-.5 * (Math.cos(Math.PI * t) - 1),
+                i2: t=>t * t,
+                o2: t=>t * (2 - t),
+                io2: t=>t < .5 ? 2 * t * t : (4 - 2 * t) * t - 1,
+                i3: t=>t * t * t,
+                o3: t=>--t * t * t + 1,
+                io3: t=>t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
+                i4: t=>t * t * t * t,
+                o4: t=>1 - --t * t * t * t,
+                io4: t=>t < .5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t,
+                i5: t=>t * t * t * t * t,
+                o5: t=>1 + --t * t * t * t * t,
+                io5: t=>t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t,
+                i6: t=>0 === t ? 0 : Math.pow(2, 10 * (t - 1)),
+                o6: t=>1 === t ? 1 : 1 - Math.pow(2, -10 * t),
+                io6: t=>0 === t ? 0 : 1 === t ? 1 : (t /= .5) < 1 ? .5 * Math.pow(2, 10 * (t - 1)) : .5 * (2 - Math.pow(2, -10 * --t))
+        },
+
+        F.Y = (e) => {
+        	F.T(e, 0, -110, '%')
+        },
+		
+		F.Clamp = (l,a,n)=>Math.min(Math.max(l, a), n),
+
+		F.Snif = {
+	        uA: navigator.userAgent.toLowerCase(),
+	        get isMobile() {
+	            return /mobi|android|tablet|ipad|iphone/.test(this.uA) || "MacIntel" === navigator.platform && 1 < navigator.maxTouchPoints
+	        },
+	        get isMobileAndroid() {
+	            return /android.*mobile/.test(this.uA)
+	        },
+	        get isAndroid() {
+	            return this.isMobileAndroid || !this.isMobileAndroid && /android/i.test(this.uA)
+	        },
+	        get isFirefox() {
+	            return -1 < this.uA.indexOf("firefox")
+	        },
+	        get safari() {
+	            return this.uA.match(/version\/[\d.]+.*safari/)
+	        },
+	        get isSafari() {
+	            return !!this.safari && !this.isAndroid
+	        },
+	        get isEdge() {
+	            return /Edge\/\d./i.test(this.uA)
+	        }
+	    },
+
+	    F.Fetch = r => {
+		    var t = "json" === r.type;
+		    const e = t ? "json" : "text";
+		    var s = {
+		        method: t ? "POST" : "GET",
+		        headers: new Headers({
+		            "Content-type": t ? "application/x-www-form-urlencoded" : "text/html"
+		        }),
+		        mode: "same-origin"
+		    };
+		    t && (s.body = r.body),
+		    fetch(r.url, s).then(t => {
+		        if (t.ok)
+		            return t[e]();
+		        r.error && r.error()
+		    }).then(t => {
+		        r.success(t)
+		    })
+		};
+
+	    !function() {
+	        "use strict";
+	        const e = navigator,
+	            t = document,
+	            n = /Mobi|Andrdoid|Tablet|iPad|iPhone/.test(e.userAgent) || "MacIntel" === e.platform && e.maxTouchPoints > 1 ? "m" : "d",
+	            s = t.createElement("link");
+	        s.rel = "stylesheet",
+	        s.href = n + ".css",
+	        t.head.appendChild(s);
+	        const a = t.createElement("script");
+	        a.src = n + ".js",
+	        t.onreadystatechange = e => {
+	            "complete" === t.readyState && t.body.appendChild(a)
+	        }
+	    }();
+	</script>
+</head>
+<body>
+	<main id='foul'>
+		<canvas id="scr"></canvas>
+		<div id="u">
+			<section id="h">
+				<div id="dvnm">
+					<h1 id="dvn">
+						<span>
+							<span style="--i: 40deg">H</span>
+						</span>
+						<span>
+							<span style="--i: 25deg">A</span>
+						</span>
+						<span>
+							<span style="--i: 0deg">R</span>
+						</span>
+						<span>
+							<span style="--i: -15deg">D</span>
+						</span>
+						<span>
+							<span style="--i: -25deg">I</span>
+						</span>
+						<span style="transform: scaleX(-1); --i: 30deg">
+							<span>K</span>
+						</span>
+					</h1>
+					<h2 id="dvs">
+						<span>
+							<span>G</span>
+						</span>
+						<span>
+							<span>A</span>
+						</span>
+						<span>
+							<span>N</span>
+						</span>
+						<span>
+							<span>D</span>
+						</span>
+						<span>
+							<span>H</span>
+						</span>
+						<span>
+							<span>I</span>
+						</span>
+					</h2>
+				</div>
+				<!-- <div id="xyz" style="font-family: griff">
+					<span>SCROLL/DRAG SIDEWAYS TO NAVIGATE</span>
+				</div> -->
+				<div class="pgn"><span>01-06</span></div>
+			</section>
+			<section id="fl1" class="bg-fl">
+				<div id="intxt">
+					<span>
+						<span>P</span>
+					</span>
+					<span>
+						<span>R</span>
+					</span>
+					<span>
+						<span>O</span>
+					</span>
+					<span>
+						<span>J</span>
+					</span>
+					<span>
+						<span>E</span>
+					</span>
+					<span>
+						<span>C</span>
+					</span>
+					<span>
+						<span>T</span>
+					</span>
+					<span>
+						<span>S</span>
+					</span>
+				</div>
+				<div id="unl1">
+					<div id="inl1"></div>
+				</div>
+				<div id="intst">
+					<span>
+						<span>S</span>
+					</span>
+					<span>
+						<span>E</span>
+					</span>
+					<span>
+						<span>C</span>
+					</span>
+					<span>
+						<span>T</span>
+					</span>
+					<span>
+						<span>I</span>
+					</span>
+					<span>
+						<span>O</span>
+					</span>
+					<span>
+						<span>N</span>
+					</span>
+				</div>
+				<div class="pgn"><span>02-06</span></div>
+			</section>
+			<section id="work">
+				<div id="frft">
+					<div id="trsT">
+						<span>
+							<span>P</span>
+						</span>
+						<span>
+							<span>H</span>
+						</span>
+						<span>
+							<span>A</span>
+						</span>
+						<span>
+							<span>S</span>
+						</span>
+						<span>
+							<span>E</span>
+						</span>
+					</div>
+				</div>
+				<div id="wks">
+					<div class="its">
+						<span class="imw tpi"><div class="aci"></div></span>
+						<span class="shd">
+							<span class="pre flxs">Name</span>
+							<span class="pre flxc">Type</span>
+							<span class="pre flxe">Date</span>
+						</span>
+					</div>
+					<div class="its">
+						<span class="imw"><div class="aci imw-b" style="transform: translateX(-50px);"></div></span>
+						<span class="shd">
+							<span class="pre flxs">Name</span>
+							<span class="pre flxc">Type</span>
+							<span class="pre flxe">Date</span>
+						</span>
+					</div>
+					<div class="its">
+						<span class="imw tpi"><div class="aci"></div></span>
+						<span class="shd">
+							<span class="pre flxs">Name</span>
+							<span class="pre flxc">Type</span>
+							<span class="pre flxe">Date</span>
+						</span>
+					</div>
+					<div class="its">
+						<span class="imw"><div class="aci imw-b"></div></span>
+						<span class="shd">
+							<span class="pre flxs">Name</span>
+							<span class="pre flxc">Type</span>
+							<span class="pre flxe">Date</span>
+						</span>
+					</div>
+					<div class="its">
+						<span class="imw tpi"><div class="aci"></div></span>
+						<span class="shd">
+							<span class="pre flxs">Name</span>
+							<span class="pre flxc">Type</span>
+							<span class="pre flxe">Date</span>
+						</span>
+					</div>
+					<div class="its">
+						<span class="imw"><div class="aci imw-b"></div></span>
+						<span class="shd">
+							<span class="pre flxs">Name</span>
+							<span class="pre flxc">Type</span>
+							<span class="pre flxe">Date</span>
+						</span>
+					</div>
+				</div>
+				<div class="pgn"><span>03-06</span></div>
+			</section>
+			<div id="fl2" class="bg-fl">
+				<h2 id="at">
+					<span>
+						<span style="--i: 30deg">A</span>
+					</span>
+					<span>
+						<span style="--i: 20deg">B</span>
+					</span>
+					<span>
+						<span style="--i: 5deg">O</span>
+					</span>
+					<span>
+						<span style="--i: -20deg">U</span>
+					</span>
+					<span>
+						<span style="--i: -40deg">T</span>
+					</span>
+				</h2>
+				<h3 id="at2">
+					<span>
+						<span style="--i: 30deg">M</span>
+					</span>
+					<span>
+						<span style="--i: -30deg">E</span>
+					</span>
+				</h3>
+				<div class="pgn"><span>04-06</span></div>
+			</div>
+			<section id="a">
+				<div id="af">
+					<span class="flin">
+						<span><span class="flet">f</span>oul</span>
+					</span>
+					<span class="aprg">
+						<span>foul is a studio created by</span>
+					</span>
+					<span class="aprg">
+						<span>Hardik aka hail. The purpose</span>
+					</span>
+					<span class="aprg">
+						<span>of this studio is to deliver</span>
+					</span>
+					<span class="aprg">
+						<span>our clients, websites with</span>
+					</span>
+					<span class="aprg">
+						<span>rich user experience.</span>
+					</span>
+					<span class="aprg">
+						<span> We consider each project as</span>
+					</span>
+					<span class="aprg">
+						<span>an opportunity to improve</span>
+					</span>
+					<span class="aprg">
+						<span>and overcome it with a</span>
+					</span>
+					<span class="aprg">
+						<span>satisfied result.</span>
+					</span>
+					<span class="aprg">
+						<span>We work with all types of</span>
+					</span>
+					<span class="aprg">
+						<span>companies, start-ups and</span>
+					</span>
+					<span class="aprg">
+						<span>individuals. Feel free</span>
+					</span>
+					<span class="aprg">
+						<span>to contact us.</span>
+					</span>
+				</div>
+				<div id="ah">
+					<span class="flin">
+						<span><span class="flet">h</span>ail</span>
+					</span>
+					<span class="aprg">
+						<span>Hardik Gandhi aka "hail" is a</span>
+					</span>
+					<span class="aprg">
+						<span>developer, fancying as a</span>
+					</span>
+					<span class="aprg">
+						<span>connoiseur in Frontend</span>
+					</span>
+					<span class="aprg">
+						<span>Development and Graphic</span>
+					</span>
+					<span class="aprg">
+						<span>Designing. Simultaneously, I am</span>
+					</span>
+					<span class="aprg">
+						<span>also exploring the field of</span>
+					</span>
+					<span class="aprg">
+						<span>Artificial Intelligence</span>
+					</span>
+					<span class="aprg">
+						<span>I would also like to get an</span>
+					</span>
+					<span class="aprg">
+						<span>internship for any AI related</span>
+					</span>
+					<span class="aprg">
+						<span>work. You can reach me out on</span>
+					</span>
+					<span class="aprg">
+						<span>my social media account.</span>
+					</span>
+
+				</div>
+				<div id="scl">
+					<span class="flin">
+						<span><span class="flet">S</span>ocials</span>
+					</span>
+					<a href="https://www.instagram.com/hardikgandhi._" target="_blank" rel="noopener" class="aprg"><span>INSTAGRAM</span></a>
+					<a href="https://pinterest.com/chill_chief/" target="_blank" rel="noopener" class="aprg"><span>PINTEREST</span></a>
+					<a href="https://www.discord.com/users/606515308945211392" target="_blank" rel="noopener" class="aprg"><span>DISCORD</span></a>
+					<a href="" target="_blank" rel="noopener" class="aprg"><span>LINKEDIN</span></a>
+					<a href="https://github.com/dev-hail" target="_blank" rel="noopener" class="aprg"><span>GITHUB</span></a>
+				</div>
+				<div class="pgn"><span>05-06</span></div>
+			</section>
+			<section id="c">
+				<div id="cbt">
+					<div class="bpt">
+						<span>
+							<span>G</span>
+						</span>
+						<span>
+							<span>E</span>
+						</span>
+						<span class="wc">
+							<span>T</span>
+						</span>
+						<span>
+							<span>I</span>
+						</span>
+						<span>
+							<span>N</span>
+						</span>
+					</div>
+					<div class="bpt">
+						<span>
+							<span>T</span>
+						</span>
+						<span>
+							<span>O</span>
+						</span>
+						<span>
+							<span>U</span>
+						</span>
+						<span>
+							<span>C</span>
+						</span>
+						<span>
+							<span>H</span>
+						</span>
+					</div>
+				</div>
+				<div id="cinf">
+					<span>Currently I am accepting new clients so, </span>
+					<span>If you have a project in mind, fill out the </span>
+					<span>adjacent form explaining its details. I'll</span>
+					<span>get in touch soon.</span>
+				</div>
+				<div class="pgn"><span>06-06</span></div>
+				<div id="form">
+				    <div id="fidv">
+				    <h3 id="fhdr">Contact us</h3>
+				    <form id="rfsn" method="POST" action="contact-form-process.php">
+				        <div>
+				            <label for="Name" class="fila">Your name</label>
+				            <div class="fia">
+				                <input type="text" id="Name" name="Name" class="fita" required>
+				            </div>
+				        </div>
+				        <div>
+				            <label for="Email" class="fila">Your email address</label>
+				            <div class="fia">
+				                <input type="email" id="Email" name="Email" class="fita" required>
+				            </div>
+				        </div>
+				        <div>
+				            <label for="Message" class="fila">Your message</label>
+				            <div class="fia">
+				                <textarea id="Message" name="Message" class="fita" rows="6" maxlength="2000" required></textarea>
+				            </div>
+				        </div>
+				        <div>
+				            <button type="submit" id="fsb">Send</button>
+				        </div>
+				    </form>
+				    </div>
+
+				</div>
+				<div id="ems">
+					<a href="mailto:hardik.dev.08@gmail.com">
+						<span>@hardik.dev.08@gmail.com</span>
+					</a>
+				</div>
+			</section>
+		</div>
+		<nav id="nav">
+			<div id="clrbg" style="opacity: 1">
+				<div id="gre"></div>
+				<div id="blc"></div>
+				<div id="whi"></div>
+				<div id="pbi"></div>
+				<div id="cre"></div>
+			</div>
+			<div id="trbg" style="opacity: 1;"></div>
+			<div id="fstc">
+				<div id="stdn">
+					<a href="/">
+						<span class="wht">foul</span>
+						<span class="blt">foul</span>
+					</a>
+				</div>
+				<div id="burger-prog"></div>
+			</div>
+			<div id="sndc">
+				<div id="bdrl" class="nvbr"></div>
+				<div id="nvgc">
+					<div class="nvgs" for='work'>
+						<div class="wht tr1">
+							<span style="--index: 0">W</span>
+							<span style="--index: 1">O</span>
+							<span style="--index: 2">R</span>
+							<span style="--index: 3">K</span>
+						</div>
+						<div class="blt tr1">
+							<span style="--index: 0">W</span>
+							<span style="--index: 1">O</span>
+							<span style="--index: 2">R</span>
+							<span style="--index: 3">K</span>
+						</div>
+						<div class="wht tr2">
+							<span style="--index: 0">W</span>
+							<span style="--index: 1">O</span>
+							<span style="--index: 2">R</span>
+							<span style="--index: 3">K</span>
+						</div>
+						<div class="blt tr2">
+							<span style="--index: 0">W</span>
+							<span style="--index: 1">O</span>
+							<span style="--index: 2">R</span>
+							<span style="--index: 3">K</span>
+						</div>
+					</div>
+					<div class="nvgs" for='about'>
+						<div class="wht tr1">
+							<span style="--index: 0">A</span>
+							<span style="--index: 1">B</span>
+							<span style="--index: 2">O</span>
+							<span style="--index: 3">U</span>
+							<span style="--index: 4">T</span>
+						</div>
+						<div class="blt tr1">
+							<span style="--index: 0">A</span>
+							<span style="--index: 1">B</span>
+							<span style="--index: 2">O</span>
+							<span style="--index: 3">U</span>
+							<span style="--index: 4">T</span>
+						</div>
+						<div class="wht tr2">
+							<span style="--index: 0">A</span>
+							<span style="--index: 1">B</span>
+							<span style="--index: 2">O</span>
+							<span style="--index: 3">U</span>
+							<span style="--index: 4">T</span>
+						</div>
+						<div class="blt tr2">
+							<span style="--index: 0">A</span>
+							<span style="--index: 1">B</span>
+							<span style="--index: 2">O</span>
+							<span style="--index: 3">U</span>
+							<span style="--index: 4">T</span>
+						</div>
+					</div>
+					<div class="nvgs" for='contact'>
+						<div class="wht tr1">
+							<span style="--index: 0">C</span>
+							<span style="--index: 1">O</span>
+							<span style="--index: 2">N</span>
+							<span style="--index: 3">T</span>
+							<span style="--index: 4">A</span>
+							<span style="--index: 5">C</span>
+							<span style="--index: 6">T</span>
+						</div>
+						<div class="blt tr1">
+							<span style="--index: 0">C</span>
+							<span style="--index: 1">O</span>
+							<span style="--index: 2">N</span>
+							<span style="--index: 3">T</span>
+							<span style="--index: 4">A</span>
+							<span style="--index: 5">C</span>
+							<span style="--index: 6">T</span>
+						</div>
+						<div class="wht tr2">
+							<span style="--index: 0">C</span>
+							<span style="--index: 1">O</span>
+							<span style="--index: 2">N</span>
+							<span style="--index: 3">T</span>
+							<span style="--index: 4">A</span>
+							<span style="--index: 5">C</span>
+							<span style="--index: 6">T</span>
+						</div>
+						<div class="blt tr2">
+							<span style="--index: 0">C</span>
+							<span style="--index: 1">O</span>
+							<span style="--index: 2">N</span>
+							<span style="--index: 3">T</span>
+							<span style="--index: 4">A</span>
+							<span style="--index: 5">C</span>
+							<span style="--index: 6">T</span>
+						</div>
+					</div>
+				</div>
+				<div id="dven">
+					<span class="wht">hail</span>
+					<span class="blt" style="top: 0; left: 0;">hail</span>
+				</div>
+			</div>
+			<div id="trdc">
+				<div id="smlb" class="nvbr"></div>
+				<div id="crty">
+					<span class="wht">2023</span>
+					<span class="blt" style="top: 0; left: 0;">2023</span>
+				</div>
+			</div>
+			<div id="nav-prog">
+				<div id="prog-bar"></div>
+			</div>
+		</nav>
+	</main>
+</body>
+</html>
