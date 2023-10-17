@@ -97,6 +97,7 @@
     bottom: 0;
     width: 3.5vw;
     transition: opacity 0.5s ease-in-out;
+    opacity: 1;
 
 }
 
