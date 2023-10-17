@@ -260,7 +260,7 @@
 }
 
 .nvgs:hover>div:nth-child(3) span, .nvgs:hover>div:nth-child(4) span{
-    transform: translate3d(0px, 0%, 0px) rotateX(0deg);
+    transform: translate3d(0px, 0%, 0px) rotateX(0deg) !important;
 }
 
 .nvgs>div, #nvgs span {
